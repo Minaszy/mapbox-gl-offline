@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <link rel="stylesheet" href="./mapbox-gl.css">
+    <script src="./mapbox-gl.js"></script>
+    <script src="./data/power_text.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        var custom_style = {
+            'version': 8,
+            // "sprite": "mapbox://sprites/mapbox/streets-v8",
+            "sprite": "http://localhost:8085/mapboxgl_demo/sprite/sprite",
+            // "sprite": "./sprite/sprite",
+            // "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+            "glyphs": "./fonts/{fontstack}/{range}.pbf",
+            'sources': {},
+            'layers': []
+        };
+
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: custom_style,
+            center: [121.66472298789209, 31.197159452998754],
+            zoom: 16
+        });
+
+        map.on('load', function() {
+
+            map.addLayer({
+                "id": "points",
+                "type": "symbol",
+                "source": {
+                    "type": "geojson",
+                    "data": powerText
+                },
+                "layout": {
+                    "icon-image": "college-15",
+                    "text-field": "学校{TEXTSTRING}",
+                    "text-font": ["Microsoft YaHei Regular"],
+                    "text-offset": [0, 0.6],
+                    "text-anchor": "top"
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
